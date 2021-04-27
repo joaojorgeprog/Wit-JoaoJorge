@@ -1,0 +1,44 @@
+{
+    "places":[
+        {
+            "id": 2267057,
+            "name": "Lisbon"
+        },
+        {
+            "id": 3117735,
+            "name": "Madrid"
+        },
+        {
+            "id": 2988507,
+            "name": "Paris"
+        },
+        {
+            "id": 2950159,
+            "name": "Berlim"
+        },
+        {
+            "id": 2618425,
+            "name": "Copenhaga"
+        },
+        {
+            "id": 5134295,
+            "name": "Roma"
+        },
+        {
+            "id": 2643743,
+            "name": "Londres"
+        },
+        {
+            "id": 5344157,
+            "name": "Dublin"
+        },
+        {
+            "id": 3067696,
+            "name": "Praga"
+        },
+        {
+            "id": 2761369,
+            "name": "Viena"
+        }
+    ]
+}

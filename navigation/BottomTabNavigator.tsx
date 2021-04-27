@@ -1,20 +1,40 @@
-/**
- * Learn more about createBottomTabNavigator:
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated as Anime } from 'react-native';
+
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import TabOneScreen from '../screens/Part1/TabOneScreen';
+import TabTwoScreen from '../screens/Part2/TabTwoScreen';
+import WitScreen from '../screens/Wit/WitScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
+
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+
+const CustomTabBarButton = ({ children, onPress }) => (
+  <TouchableOpacity
+    style={{
+      top: -20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      ...styles.shadow
+    }}
+    onPress={onPress}
+  >
+    <View style={{
+      width: 70,
+      height: 70,
+      borderRadius: 35,
+      backgroundColor: '#e32f45'
+    }}>
+      {children}
+    </View>
+  </TouchableOpacity>
+);
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -22,19 +42,39 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: 'red', showLabel: false }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Part1"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="gps-fixed" size={24} color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="TabOne"
+        component={PlusNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../assets/icons/wit3.png')}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+                tintColor: '#fff'
+              }}
+            />
+          ),
+          tabBarButton: (props) => (
+            <CustomTabBarButton {...props} />
+          )
+        }}
+      />
+      <BottomTab.Screen
+        name="Part2"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="filter-variant" size={24} color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -57,9 +97,26 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerShown: false }}
       />
     </TabOneStack.Navigator>
+  );
+}
+
+const TabPlusStack = createStackNavigator<TabTwoParamList>();
+
+function PlusNavigator() {
+  return (
+    <TabPlusStack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}>
+      <TabPlusStack.Screen
+        name="WitScreen"
+        component={WitScreen}
+        options={{ headerTitle: 'Wit' }}
+      />
+    </TabPlusStack.Navigator>
   );
 }
 
@@ -71,8 +128,21 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerShown: false }}
       />
     </TabTwoStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#7F5DF0',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5
+  }
+})
